@@ -1,9 +1,7 @@
 name: Build, Test, and Run [OMIT_DEPRECATED=true]
 
 # Run every time a new commit pushed or for pull requests
-on:
-  push:
-  pull_request:
+on: [push, pull_request]
 
 env:
   SIMULATION: native
@@ -12,7 +10,7 @@ env:
 jobs:
   #Checks for duplicate actions. Skips push actions if there is a matching or duplicate pull-request action. 
   check-for-duplicates:
-    runs-on: ghcr.io/nmullane/cfs_image_test
+    container: nmullane/cfs_image_test
     # Map a step output to a job output
     outputs:
         should_skip: ${{ steps.skip_check.outputs.should_skip }}
@@ -29,7 +27,7 @@ jobs:
     needs: check-for-duplicates
     if: ${{ needs.check-for-duplicates.outputs.should_skip != 'true' }}
     name: Build
-    runs-on: ghcr.io/nmullane/cfs_image_test
+    container: nmullane/cfs_image_test
     strategy:
       fail-fast: false
       matrix:
@@ -61,7 +59,7 @@ jobs:
 
   test-cfs:
     name: Test
-    runs-on: ghcr.io/nmullane/cfs_image_test
+    container: nmullane/cfs_image_test
     
     needs: build-cfs
 
@@ -105,7 +103,7 @@ jobs:
   run-cfs:
     name: Run
     needs: build-cfs
-    runs-on: ghcr.io/nmullane/cfs_image_test
+    container: nmullane/cfs_image_test
 
     strategy:
       fail-fast: false
