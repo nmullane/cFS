@@ -12,7 +12,7 @@ env:
 jobs:
   #Checks for duplicate actions. Skips push actions if there is a matching or duplicate pull-request action. 
   check-for-duplicates:
-    runs-on: ubuntu-latest
+    runs-on: nmullane/cfs_image_test
     # Map a step output to a job output
     outputs:
         should_skip: ${{ steps.skip_check.outputs.should_skip }}
@@ -32,7 +32,7 @@ jobs:
     needs: check-for-duplicates
     if: ${{ needs.check-for-duplicates.outputs.should_skip != 'true' }}
     name: Build
-    runs-on: ubuntu-18.04
+    runs-on: nmullane/cfs_image_test
 
     strategy:
       fail-fast: false
@@ -66,7 +66,7 @@ jobs:
   test-cfs:
     name: Test
     needs: build-cfs
-    runs-on: ubuntu-18.04
+    runs-on: nmullane/cfs_image_test
 
     strategy:
       fail-fast: false
@@ -108,7 +108,7 @@ jobs:
   run-cfs:
     name: Run
     needs: build-cfs
-    runs-on: ubuntu-18.04
+    runs-on: nmullane/cfs_image_test
 
     strategy:
       fail-fast: false
