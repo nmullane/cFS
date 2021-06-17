@@ -11,7 +11,7 @@ env:
 jobs:
   #Checks for duplicate actions. Skips push actions if there is a matching or duplicate pull-request action.
   checks-for-duplicates:
-    runs-on: nmullane/cfs_image_test
+    runs-on: ubuntu-latest
     # Map a step output to a job output
     outputs:
       should_skip: ${{ steps.skip_check.outputs.should_skip }}
@@ -28,12 +28,10 @@ jobs:
     needs: checks-for-duplicates
     if: ${{ needs.checks-for-duplicates.outputs.should_skip != 'true' }}
     name: cFE Documentation
-    runs-on: nmullane/cfs_image_test
+    runs-on: ubuntu-latest
+    container: ghcr.io/nmullane/cfs_image_test
 
     steps:
-      - name: Install Dependencies
-        run: sudo apt-get install doxygen graphviz -y
-
         # Check out the cfs bundle
       - name: Checkout code
         uses: actions/checkout@v2
@@ -76,7 +74,8 @@ jobs:
     if: ${{ needs.checks-for-duplicates.outputs.should_skip != 'true' }}
     name: Users Guide
     # Set the type of machine to run on
-    runs-on: nmullane/cfs_image_test
+    runs-on: ubuntu-latest
+    container: ghcr.io/nmullane/cfs_image_test
 
     steps:
       # Checks out a copy of your repository on the ubuntu-latest machine
@@ -95,9 +94,6 @@ jobs:
       # Setup the build system
       - name: Make Prep
         run: make prep
-
-      - name: Install Dependencies
-        run: sudo apt-get install doxygen graphviz -y
 
       - name: Build Usersguide
         run: |
@@ -128,11 +124,6 @@ jobs:
             exit -1
           fi
 
-      - name: PDF generation installs
-        if: ${{ github.event_name == 'push' && contains(github.ref, 'main')}}
-        run: |
-          sudo apt-get install texlive-latex-base texlive-fonts-recommended texlive-fonts-extra texlive-latex-extra
-
       - name: PDF generation
         if: ${{ github.event_name == 'push' && contains(github.ref, 'main')}}
         run: |
@@ -160,7 +151,8 @@ jobs:
     if: ${{ needs.checks-for-duplicates.outputs.should_skip != 'true' }}
     name: Osal Guide
     # Set the type of machine to run on
-    runs-on: nmullane/cfs_image_test
+    runs-on: ubuntu-latest
+    container: ghcr.io/nmullane/cfs_image_test
 
     steps:
       # Checks out a copy of your repository on the ubuntu-latest machine
