@@ -16,6 +16,8 @@ jobs:
     outputs:
       should_skip: ${{ steps.skip_check.outputs.should_skip }}
     steps:
+      - name: Git Version
+        run: git --version
       - id: skip_check
         uses: fkirc/skip-duplicate-actions@master
         with:
@@ -32,6 +34,8 @@ jobs:
     container: ghcr.io/nmullane/cfs_image_test
 
     steps:
+      - name: Git Version
+        run: git --version
         # Check out the cfs bundle
       - name: Checkout code
         uses: actions/checkout@v2
