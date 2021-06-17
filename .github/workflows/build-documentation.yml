@@ -28,7 +28,7 @@ jobs:
     needs: checks-for-duplicates
     if: ${{ needs.checks-for-duplicates.outputs.should_skip != 'true' }}
     name: cFE Documentation
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     container: ghcr.io/nmullane/cfs_image_test
 
     steps:
@@ -74,7 +74,7 @@ jobs:
     if: ${{ needs.checks-for-duplicates.outputs.should_skip != 'true' }}
     name: Users Guide
     # Set the type of machine to run on
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     container: ghcr.io/nmullane/cfs_image_test
 
     steps:
@@ -151,7 +151,7 @@ jobs:
     if: ${{ needs.checks-for-duplicates.outputs.should_skip != 'true' }}
     name: Osal Guide
     # Set the type of machine to run on
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     container: ghcr.io/nmullane/cfs_image_test
 
     steps:
