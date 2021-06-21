@@ -210,6 +210,7 @@ jobs:
         if: ${{ github.event_name == 'push' || contains(github.ref, 'main')}}
         run: |
           mkdir deploy
+          ls
           cd ./build/doc/osalguide/latex
           make > build.txt
           mv refman.pdf $GITHUB_WORKSPACE/deploy/OSAL_Users_Guide.pdf
