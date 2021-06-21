@@ -156,7 +156,7 @@ jobs:
     name: Osal Guide
     # Set the type of machine to run on
     runs-on: ubuntu-18.04
-    #container: ghcr.io/nmullane/cfs_image_test
+    container: ghcr.io/nmullane/cfs_image_test
 
     steps:
       # Checks out a copy of your repository on the ubuntu-latest machine
