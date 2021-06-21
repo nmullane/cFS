@@ -148,7 +148,6 @@ jobs:
           FOLDER: deploy
           CLEAN: false
           SINGLE_COMMIT: true
-
   build-osalguide:
     # Name the Job
     needs: checks-for-duplicates
@@ -156,7 +155,6 @@ jobs:
     name: Osal Guide
     # Set the type of machine to run on
     runs-on: ubuntu-18.04
-    container: ghcr.io/nmullane/cfs_image_test
 
     steps:
       # Checks out a copy of your repository on the ubuntu-latest machine
@@ -171,17 +169,17 @@ jobs:
         run: |
           cp ./cfe/cmake/Makefile.sample Makefile
           cp -r ./cfe/cmake/sample_defs sample_defs
-
       # Setup the build system
       - name: Make Prep
         run: make prep
 
+      - name: Install Dependencies
+        run: sudo apt-get install doxygen graphviz -y
+
       - name: Build OSAL Guide
         run: |
           make osalguide > make_osalguide_stdout.txt 2> make_osalguide_stderr.txt
-          mv build/doc/osalguide/osal-apiguide-warnings.log osal-apiguide-warnings.log
-
-
+          mv build/docs/osalguide/osal-apiguide-warnings.log osal-apiguide-warnings.log
       - name: Archive Osal Guide Build Logs
         uses: actions/upload-artifact@v2
         with:
@@ -190,35 +188,33 @@ jobs:
             make_osalguide_stdout.txt
             make_osalguide_stderr.txt
             osal-apiguide-warnings.log
-
-
       - name: Error Check
         run: |
           if [[ -s make_osalguide_stderr.txt ]]; then
             cat make_osalguide_stderr.txt
             exit -1
           fi
-
       - name: Warning Check
         run: |
           if [[ -s osal-apiguide-warnings.log ]]; then
             cat osal-apiguide-warnings.log
             exit -1
           fi
-
+      - name: PDF generation installs
+        if: ${{ github.event_name == 'push' && contains(github.ref, 'main')}}
+        run: |
+          sudo apt-get install texlive-latex-base texlive-fonts-recommended texlive-fonts-extra texlive-latex-extra
       - name: PDF generation
-        if: ${{ github.event_name == 'push' || contains(github.ref, 'main')}}
-        # Note: apiguide used to be osalguide but this step was failing because of this
+        if: ${{ github.event_name == 'push' && contains(github.ref, 'main')}}
         run: |
           mkdir deploy
-          cd ./build/doc/apiguide/latex
+          cd ./build/docs/osalguide/latex
           make > build.txt
           mv refman.pdf $GITHUB_WORKSPACE/deploy/OSAL_Users_Guide.pdf
           # Could add pandoc and convert to github markdown
           # pandoc CFE_Users_Guide.pdf -t gfm
-
       - name: Deploy
-        if: ${{ github.event_name == 'push' || contains(github.ref, 'main')}}
+        if: ${{ github.event_name == 'push' && contains(github.ref, 'main')}}
         uses: JamesIves/github-pages-deploy-action@3.7.1
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
