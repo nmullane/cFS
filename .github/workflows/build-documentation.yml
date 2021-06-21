@@ -11,7 +11,7 @@ env:
 jobs:
   #Checks for duplicate actions. Skips push actions if there is a matching or duplicate pull-request action.
   checks-for-duplicates:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     # Map a step output to a job output
     outputs:
       should_skip: ${{ steps.skip_check.outputs.should_skip }}
@@ -76,7 +76,7 @@ jobs:
     # Name the Job
     needs: checks-for-duplicates
     if: ${{ needs.checks-for-duplicates.outputs.should_skip != 'true' }}
-    name: Users Guide
+    name: Users Guid/
     # Set the type of machine to run on
     runs-on: ubuntu-18.04
     container: ghcr.io/nmullane/cfs_image_test

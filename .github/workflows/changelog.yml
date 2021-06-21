@@ -7,7 +7,7 @@ on:
     
 jobs:
   build:
-    runs-on: nmullane/cfs_image_test
+    runs-on: ubuntu-18.04
 
     steps:
       - uses: actions/checkout@v2
