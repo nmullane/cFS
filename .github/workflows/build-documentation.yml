@@ -213,12 +213,12 @@ jobs:
           fi
 
       - name: PDF generation installs
-        if: ${{ github.event_name == 'push' && contains(github.ref, 'main')}}
+        if: ${{ github.event_name == 'push' || contains(github.ref, 'main')}}
         run: |
           sudo apt-get install texlive-latex-base texlive-fonts-recommended texlive-fonts-extra texlive-latex-extra
 
       - name: PDF generation
-        if: ${{ github.event_name == 'push' && contains(github.ref, 'main')}}
+        if: ${{ github.event_name == 'push' || contains(github.ref, 'main')}}
         run: |
           mkdir deploy
           cd ./build/docs/osalguide/latex
@@ -228,7 +228,7 @@ jobs:
           # pandoc CFE_Users_Guide.pdf -t gfm
 
       - name: Deploy
-        if: ${{ github.event_name == 'push' && contains(github.ref, 'main')}}
+        if: ${{ github.event_name == 'push' || contains(github.ref, 'main')}}
         uses: JamesIves/github-pages-deploy-action@3.7.1
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
