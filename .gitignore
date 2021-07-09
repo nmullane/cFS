@@ -1,4 +1,5 @@
-Makefile
 build
-/sample_defs
 .DS_Store
+GPATH
+GRTAGS
+GTAGS
