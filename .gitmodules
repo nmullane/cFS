@@ -22,14 +22,6 @@
 	path = apps/sample_lib
 	url = https://github.com/nasa/sample_lib.git
         branch = master
-[submodule "apps/sch_lab"]
-	path = apps/sch_lab
-	url = https://github.com/nasa/sch_lab.git
-        branch = master
-[submodule "apps/to_lab"]
-	path = apps/to_lab
-	url = https://github.com/nasa/to_lab.git
-        branch = master
 [submodule "tools/cFS-GroundSystem"]
 	path = tools/cFS-GroundSystem
 	url = https://github.com/nasa/cFS-GroundSystem.git
