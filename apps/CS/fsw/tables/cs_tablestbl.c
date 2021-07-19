@@ -30,8 +30,8 @@ CS_Def_Tables_Table_Entry_t      CS_TablesTable[CS_MAX_NUM_TABLES_TABLE_ENTRIES]
 {
     /*         State             Name   */
 
-    /*   0 */ { CS_STATE_EMPTY,   ""    },
-    /*   1 */ { CS_STATE_EMPTY,   ""    },
+    /*   0 */ { CS_STATE_DISABLED,   "SAMPLE_APP.SampleAppTable"    },
+    /*   1 */ { CS_STATE_DISABLED,   "TO_LAB_APP.TO_LAB_Subs"    },
     /*   2 */ { CS_STATE_EMPTY,   ""    },
     /*   3 */ { CS_STATE_EMPTY,   ""    },
     /*   4 */ { CS_STATE_EMPTY,   ""    },
