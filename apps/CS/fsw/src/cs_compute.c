@@ -80,7 +80,8 @@ int32 CS_ComputeEepromMemory (CS_Res_EepromMemory_Table_Entry_t         * Result
         {
             /* This is NOT the first time through this Entry.  
              We have already computed a CS value for this Entry */             
-            
+            // TODO: PURPOSEFULLY BROKEN CODE
+            NewChecksumValue += 1; 
             if (NewChecksumValue != ResultsEntry -> ComparisonValue)
             {
                 /* If the just-computed value differ from the saved value */                                
